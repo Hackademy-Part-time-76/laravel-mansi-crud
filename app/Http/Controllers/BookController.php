@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BookStoreRequest;
+use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class BookController extends Controller
 
     public function create()
     {
-        return view('books.create');
+        $authors = Author::all();
+        return view('books.create', compact('authors'));
         //     Book::create([
         //         'name' => 'Libro di storia',
         //         'pages' => 897,
@@ -33,6 +35,7 @@ class BookController extends Controller
 
     public function store(BookStoreRequest $request)
     {
+
         if ($request->hasFile('image')) {
             $image = $request->file('image')->store('covers', 'public');
         } else {
@@ -43,7 +46,8 @@ class BookController extends Controller
             'name' => $request->name,
             'pages' => $request->input('pages'),
             'year' => $request->input('year'),
-            'image' => $image
+            'image' => $image,
+            'author_id' =>  $request->input('author_id'),
         ]);
 
         return redirect()->route('books.index')->with('success', 'Libro creato con successo');

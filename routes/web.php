@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Models\Book;
 use Illuminate\Support\Facades\Route;
@@ -12,3 +13,5 @@ Route::get('/dettaglio-libro/{book}',  [BookController::class, 'show'])->name('b
 Route::get('/modifica-libri/{book}', [BookController::class, 'edit'])->name('books.edit');
 Route::put('/aggiorna/{book}', [BookController::class, 'update'])->name('books.update');
 Route::delete('/elimina-libro/{book}', [BookController::class, 'destroy'])->name('books.destroy');
+
+Route::resource('authors', AuthorController::class);// ho generato le 7 rotte di un CRUD

@@ -11,6 +11,7 @@
     @auth
         <div class="container">
             <a href="{{ route('books.create') }}" class="btn btn-primary">Crea nuovo Libro</a>
+            <a href="{{ route('authors.index') }}" class="btn btn-success">Lista Autori</a>
 
         </div>
     @endauth

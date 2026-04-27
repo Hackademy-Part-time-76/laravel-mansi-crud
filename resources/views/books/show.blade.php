@@ -4,6 +4,11 @@
         <h2> Il libro in quetsione si chiama {{ $book->name }}</h2>
         <p>Il libro ha pagine: {{ $book->pages }}</p>
         <p>Il libro è stato scritto nel : {{ $book->year }}</p>
+        @if ($book->author)
+            <p>L'autore di quetso libro si chiama: {{ $book->author->firstname }} {{ $book->author->lastname ?? '' }}
+            </p>
+        @endif
+
         <img src="{{ Storage::url($book->image) }}" class="card-img-top" alt="...">
 
     </div>

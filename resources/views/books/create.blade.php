@@ -33,7 +33,14 @@
                     </div>
                 @enderror
             </div>
-
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Autore</label>
+                <select class="form-control" name="author_id">
+                    @foreach ($authors as $author)
+                        <option value="{{ $author->id }}">{{ $author->firstname }} {{ $author->lastname }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="mb-3">
                 <label for="formFile" class="form-label">Copertina</label>
                 <input class="form-control" type="file" name="image">
