@@ -12,6 +12,7 @@
         <div class="container">
             <a href="{{ route('books.create') }}" class="btn btn-primary">Crea nuovo Libro</a>
             <a href="{{ route('authors.index') }}" class="btn btn-success">Lista Autori</a>
+            <a href="{{ route('categories.index') }}" class="btn btn-warning">Lista Categorie</a>
 
         </div>
     @endauth
@@ -24,12 +25,14 @@
                     <h5 class="card-title">{{ $book->name }}</h5>
 
                     <a href="{{ route('books.show', ['book' => $book]) }}" class="btn btn-primary">Dettagli</a>
-                    <a href="{{ route('books.edit', ['book' => $book]) }}" class="btn btn-warning">Modifica</a>
-                    <form action="{{ route('books.destroy', ['book' => $book]) }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Elimina</button>
-                    </form>
+                    @auth
+                        <a href="{{ route('books.edit', ['book' => $book]) }}" class="btn btn-warning">Modifica</a>
+                        <form action="{{ route('books.destroy', ['book' => $book]) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Elimina</button>
+                        </form>
+                    @endauth
                 </div>
             </div>
         @endforeach

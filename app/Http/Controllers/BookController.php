@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BookStoreRequest;
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -18,7 +19,8 @@ class BookController extends Controller
     public function create()
     {
         $authors = Author::all();
-        return view('books.create', compact('authors'));
+        $categories = Category::all();
+        return view('books.create', compact('authors', 'categories'));
         //     Book::create([
         //         'name' => 'Libro di storia',
         //         'pages' => 897,
@@ -42,13 +44,16 @@ class BookController extends Controller
             $image = 'assets/default.png';
         }
 
-        Book::create([
+        $book = Book::create([
             'name' => $request->name,
             'pages' => $request->input('pages'),
             'year' => $request->input('year'),
             'image' => $image,
             'author_id' =>  $request->input('author_id'),
         ]);
+
+        $book->categories()->attach($request->input('categories'));
+
 
         return redirect()->route('books.index')->with('success', 'Libro creato con successo');
     }
@@ -60,7 +65,9 @@ class BookController extends Controller
 
     public function edit(Book $book)
     {
-        return view('books.edit', compact('book'));
+        $authors = Author::all();
+        $categories = Category::all();
+        return view('books.edit', compact('book', 'authors', 'categories'));
     }
 
     public function update(Request $request, Book $book)
@@ -75,8 +82,11 @@ class BookController extends Controller
             'name' => $request->name,
             'pages' => $request->input('pages'),
             'year' => $request->input('year'),
-            'image' => $image
+            'image' => $image,
+            'author_id' =>  $request->input('author_id'),
         ]);
+        $book->categories()->detach();
+        $book->categories()->attach($request->input('categories'));
 
         return redirect()->route('books.index')->with('success', 'Libro modificato con successo');
     }
@@ -84,6 +94,7 @@ class BookController extends Controller
 
     public function destroy(Book $book)
     {
+        $book->categories()->detach();
         $book->delete();
 
         return redirect()->route('books.index')->with('success', 'Libro eliminato con successo');

@@ -36,6 +36,27 @@
             </div>
 
             <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Autore</label>
+                <select class="form-control" name="author_id">
+                    @foreach ($authors as $author)
+                        <option @if ($book->author_id == $author->id) selected @endif value="{{ $author->id }}">
+                            {{ $author->firstname }} {{ $author->lastname }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
+                @foreach ($categories as $category)
+                    <div class="form-check">
+                        <input class="form-check-input" @if ($book->categories->contains($category->id)) checked @endif type="checkbox"
+                            value="{{ $category->id }}" name="categories[]" id="checkDefault-{{ $category->id }}">
+                        <label class="form-check-label" for="checkDefault-{{ $category->id }}">
+                            {{ $category->name }}
+                        </label>
+                    </div>
+                @endforeach
+            </div>
+            <div class="mb-3">
                 <img style="width:5rem" src="{{ Storage::url($book->image) }}" class="card-img-top" alt="...">
 
                 <label for="formFile" class="form-label">Copertina Attuale</label>

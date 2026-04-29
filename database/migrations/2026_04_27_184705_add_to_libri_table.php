@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('libri', function (Blueprint $table) {
+        Schema::table('books', function (Blueprint $table) {
             $table->unsignedBigInteger('author_id')->nullable();
             $table->foreign('author_id')->references('id')->on('authors'); //disegniamo la riga di colleagmento
         });
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('libri', function (Blueprint $table) {
+        Schema::table('books', function (Blueprint $table) {
             //
         });
     }
